@@ -35,10 +35,13 @@ function App(): React.JSX.Element {
   }, [])
 
   return (
-    <>
+    <div className="w-full h-screen p-6">
+      <h1 className="text-white text-center text-2xl font-bold mb-16">Lantern 🏮</h1>
       {error && <div style={{ color: 'red' }}>Error: {error}</div>}
-      {stats ? <Card stats={stats} /> : <div>Loading system stats...</div>}
-    </>
+      <div className="grid grid-cols-3 gap-4">
+        {stats ? <Card stats={stats} /> : <div>Loading system stats...</div>}
+      </div>
+    </div>
   )
 }
 
