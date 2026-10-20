@@ -1,7 +1,7 @@
-import Versions from './components/Versions'
 import React, { useState, useEffect } from 'react'
+import Card from './components/Card'
 
-type StatsResponse = {
+export type StatsResponse = {
   hostname: string
   cpu_percent: number
   memory_percent: number
@@ -21,7 +21,7 @@ function App(): React.JSX.Element {
       try {
         const data = await window.api.getStats()
         setStats(data)
-        setError(null);
+        setError(null)
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message)
@@ -36,9 +36,8 @@ function App(): React.JSX.Element {
 
   return (
     <>
-      {error && <p>Error: {error}</p>}
-      {stats && <pre>{JSON.stringify(stats, null, 2)}</pre>}
-      <Versions></Versions>
+      {error && <div style={{ color: 'red' }}>Error: {error}</div>}
+      {stats ? <Card stats={stats} /> : <div>Loading system stats...</div>}
     </>
   )
 }
