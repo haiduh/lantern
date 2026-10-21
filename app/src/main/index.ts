@@ -1,7 +1,18 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
+import path, { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import fs from 'fs/promises'
+
+type Machine = {
+  id: string
+  name: string
+  ip: string
+  port: number
+}
+
+const machinePath = path.join(app.getPath('userData'), 'machines-save', 'machines.json')
+const dirPath = path.dirname(machinePath)
 
 async function handleStats() {
   try {
@@ -16,6 +27,30 @@ async function handleStats() {
   } catch (error) {
     console.error('Failed to fetch stats:', error)
     throw error
+  }
+}
+
+async function readMachines() {
+  try {
+    console.log(machinePath)
+    const data = await fs.readFile(machinePath, 'utf-8')
+    const parsedData = JSON.parse(data)
+    console.log('This is the data: ', parsedData)
+    return parsedData
+  } catch (err) {
+    console.error('Error reading file:', err)
+    return []
+  }
+}
+
+async function writeMachines(machines: Machine[]) {
+  try {
+    await fs.mkdir(dirPath, { recursive: true })
+    console.log(machinePath)
+    await fs.writeFile(machinePath, JSON.stringify(machines, null, 2), 'utf-8')
+    console.log('File written successfully!')
+  } catch (err) {
+    console.error('Error writing file:', err)
   }
 }
 
@@ -57,6 +92,8 @@ function createWindow(): void {
 app.whenReady().then(() => {
   // Set app user model id for windows
   ipcMain.handle('get-stats', handleStats)
+  ipcMain.handle('get-machines', readMachines)
+  ipcMain.handle('save-machines', (_, machines) => writeMachines(machines))
   electronApp.setAppUserModelId('com.electron')
 
   // Default open or close DevTools by F12 in development

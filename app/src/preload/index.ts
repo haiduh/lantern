@@ -3,7 +3,9 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  getStats: () => ipcRenderer.invoke('get-stats')
+  getStats: () => ipcRenderer.invoke('get-stats'),
+  getMachines: () => ipcRenderer.invoke('get-machines'),
+  saveMachines: (machines) => ipcRenderer.invoke('save-machines', machines)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

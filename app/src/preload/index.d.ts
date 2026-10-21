@@ -5,6 +5,8 @@ declare global {
     electron: ElectronAPI
     api: {
       getStats: () => Promise<StatsResponse>
+      getMachines: () => Promise<Machine[]>
+      saveMachines: (machines: Machine[]) => Promise<void>
     }
   }
 }

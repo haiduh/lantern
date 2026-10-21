@@ -1,5 +1,5 @@
 import { FC, JSX, useState } from 'react'
-import { StatsResponse } from '@renderer/App'
+import { StatsResponse } from '../types'
 
 interface readStats {
   stats: StatsResponse

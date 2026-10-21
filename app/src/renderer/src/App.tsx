@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
-
-export type StatsResponse = {
-  hostname: string
-  cpu_percent: number
-  memory_percent: number
-  top_processes: {
-    pid: string
-    name: string
-    cpu_percent: number
-  }[]
-}
+import { StatsResponse } from './types'
 
 function App(): React.JSX.Element {
   const [stats, setStats] = useState<StatsResponse | null>(null)
