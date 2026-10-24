@@ -16,6 +16,12 @@ function App(): React.JSX.Element {
     await window.api.saveMachines(updated)
   }
 
+  const handleRemoveMachine = async (machine: Machine) => {
+    const updated = machines.filter((m) => m.id !== machine.id)
+    setMachines(updated)
+    await window.api.saveMachines(updated)
+  }
+
   useEffect(() => {
     const fetchMachines = async () => {
       try {
@@ -58,15 +64,18 @@ function App(): React.JSX.Element {
       {error && <div style={{ color: 'red' }}>Error: {error}</div>}
       <div className="grid grid-cols-3 gap-4">
         {machines.map((machine) => (
-          <Card key={machine.id} machine={machine} stats={machineStats[machine.id] ?? null} />
+          <Card key={machine.id} machine={machine} stats={machineStats[machine.id] ?? null} onRemove={handleRemoveMachine} />
         ))}
       </div>
-      <Button className="flex justify-center items-center" variant="contained" onClick={() => setShowForm((prev) => !prev)}>
+      <Button
+        className="flex justify-center items-center"
+        variant="contained"
+        onClick={() => setShowForm((prev) => !prev)}
+      >
         Add Machine
       </Button>
 
-      {showForm && <AddMachineForm onAdd={handleAddMachine}/>}
-
+      {showForm && <AddMachineForm onAdd={handleAddMachine} />}
     </div>
   )
 }
