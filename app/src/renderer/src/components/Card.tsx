@@ -17,6 +17,16 @@ const Card: FC<readStats> = ({ stats, machine, onRemove }): JSX.Element => {
       <div className="bg-zinc-800 rounded-xl p-4 w-64">
         <h2 className="text-white font-semibold text-lg mb-3">{machine.name}</h2>
         <p className="text-zinc-500 text-sm">Connecting...</p>
+        <IconButton
+          aria-label="delete"
+          sx={{ color: 'white' }}
+          onClick={(e) => {
+            e.stopPropagation()
+            onRemove(machine)
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
       </div>
     )
   }
@@ -30,6 +40,7 @@ const Card: FC<readStats> = ({ stats, machine, onRemove }): JSX.Element => {
         <h2 className="text-white font-semibold text-lg">{stats.hostname}</h2>
         <IconButton
           aria-label="delete"
+          sx={{ color: 'white' }}
           onClick={(e) => {
             e.stopPropagation()
             onRemove(machine)

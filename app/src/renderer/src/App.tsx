@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Card from './components/Card'
 import AddMachineForm from './components/AddMachineForm'
 import { Machine, StatsResponse } from './types'
-import { Button } from '@mui/material'
 
 function App(): React.JSX.Element {
   const [machines, setMachines] = useState<Machine[]>([])
@@ -60,22 +59,27 @@ function App(): React.JSX.Element {
 
   return (
     <div className="w-full h-screen p-6">
-      <h1 className="text-white text-center text-2xl font-bold mb-16">Lantern 🏮</h1>
+      <h1 className="text-white text-center text-2xl font-bold mb-16">Lantern</h1>
+      <div className="flex flex-col items-center mb-6">
+        <button
+          onClick={() => setShowForm((prev) => !prev)}
+          className="px-4 py-2 bg-zinc-700 text-white text-sm font-medium rounded-lg border border-zinc-600 hover:bg-zinc-600 transition-colors"
+        >
+          + Add Machine
+        </button>
+        {showForm && <AddMachineForm onAdd={handleAddMachine} onClose={() => setShowForm(false)} />}
+      </div>
       {error && <div style={{ color: 'red' }}>Error: {error}</div>}
       <div className="grid grid-cols-3 gap-4">
         {machines.map((machine) => (
-          <Card key={machine.id} machine={machine} stats={machineStats[machine.id] ?? null} onRemove={handleRemoveMachine} />
+          <Card
+            key={machine.id}
+            machine={machine}
+            stats={machineStats[machine.id] ?? null}
+            onRemove={handleRemoveMachine}
+          />
         ))}
       </div>
-      <Button
-        className="flex justify-center items-center"
-        variant="contained"
-        onClick={() => setShowForm((prev) => !prev)}
-      >
-        Add Machine
-      </Button>
-
-      {showForm && <AddMachineForm onAdd={handleAddMachine} />}
     </div>
   )
 }
