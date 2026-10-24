@@ -87,7 +87,7 @@ npm run build:linux # Linux
 
 ## Status
 
-Early development. Single-machine support working. Multi-machine support and packaging coming soon.
+Working. Multi-machine support complete. Persistent config, live polling, and Windows packaging done.
 
 ---
 

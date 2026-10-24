@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: lantern
+appId: com.lantern.app
+productName: Lantern
 directories:
   buildResources: build
 files:
