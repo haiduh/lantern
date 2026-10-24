@@ -1,12 +1,22 @@
 import { FC, JSX, useState } from 'react'
-import { StatsResponse } from '../types'
+import { Machine, StatsResponse } from '../types'
 
 interface readStats {
-  stats: StatsResponse
+  machine: Machine
+  stats: StatsResponse | null
 }
 
-const Card: FC<readStats> = ({ stats }): JSX.Element => {
+const Card: FC<readStats> = ({ stats, machine }): JSX.Element => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false)
+
+  if (!stats) {
+    return (
+      <div className="bg-zinc-800 rounded-xl p-4 w-64">
+        <h2 className="text-white font-semibold text-lg mb-3">{machine.name}</h2>
+        <p className="text-zinc-500 text-sm">Connecting...</p>
+      </div>
+    )
+  }
 
   return (
     <div

@@ -3,7 +3,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  getStats: () => ipcRenderer.invoke('get-stats'),
+  getStats: (ip: string, port: number) => ipcRenderer.invoke('get-stats', ip, port),
   getMachines: () => ipcRenderer.invoke('get-machines'),
   saveMachines: (machines) => ipcRenderer.invoke('save-machines', machines)
 }

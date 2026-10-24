@@ -14,9 +14,9 @@ type Machine = {
 const machinePath = path.join(app.getPath('userData'), 'machines-save', 'machines.json')
 const dirPath = path.dirname(machinePath)
 
-async function handleStats() {
+async function handleStats(ip: string, port: number) {
   try {
-    const response = await fetch('http://localhost:8000/stats')
+    const response = await fetch(`http://${ip}:${port}/stats`)
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
@@ -91,7 +91,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  ipcMain.handle('get-stats', handleStats)
+  ipcMain.handle('get-stats', (_, ip, port) => handleStats(ip, port))
   ipcMain.handle('get-machines', readMachines)
   ipcMain.handle('save-machines', (_, machines) => writeMachines(machines))
   electronApp.setAppUserModelId('com.electron')
